@@ -1,7 +1,14 @@
+/**
+ * Fibonacci Sequence
+ *
+ * A function that, given a number n, will output the number at
+ * that position of the Fibonacci sequence
+ *
+ */ 
+
 var assert = require('chai').assert;
 
 var fib = require('../../lib/fib');
-
 
 describe("fib", function() {
 

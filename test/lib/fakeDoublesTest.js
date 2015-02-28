@@ -1,4 +1,32 @@
+/**
+ * Fake Doubles (Fake TDD)
+ *
+ * Assume you already have an object, User, which has a _getData method available (on itself, or through the prototype chain, it doesn't matter).
+ * (Hint: see /samples/user.js) 
+ *
+ * Add a new method, "load", which expects a numeric user id. Load is responsible for:
+ * 
+ * 1. Logs “loading user <id>” to the console using console.log
+ * 2. Attempts to load data via the custom-built ajax method, “_getData”, available on itself.
+ * 3. When the ajax request fails, _getData returns false, and the load() function should log “request failed” to the console
+ * 4. When the ajax request succeeds, _getData returns an array, and the load() function should log “success” to the console.
+ *
+ * (*_getData is synchronous for the lab, but don't worry about that yet)
+ *
+ * Tips:
+ * You will be spying on console.log
+ * You will be stubbing _getData
+ *
+ * Bonus:
+ * Have load accept a callback function as the second argument. 
+ * Load should invoke this callback after _getData completes.
+ * How might you test to verify that your callback is indeed being invoked? 
+ * How might you test to verify it is definitely being called after _getData?
+ *
+ */ 
+
 var assert = require('chai').assert;
+
 var sinon = require('sinon');
 
 var User = require('../../lib/fakeDoubles');
@@ -27,7 +55,7 @@ describe("User", function() {
 
 		});
 
-		// triangulation test was more clear that combined test
+		// triangulation test was more clear than a combined test
 		// however, now this test and the one above are ripe for refactoring...
 		it("should log user id to the console as loading", function() {
 
@@ -65,8 +93,9 @@ describe("User", function() {
 
 			user.load(7);
 
-			// why store result separately?
-			// by stubbing console.log, we have prevented normal
+			// Why are we storing the "result" here?
+			//
+			// When we stubbed console.log it prevented any normal
 			// assertion error output; an assertion failure here
 			// would just hit our stubbed out console.log method
 			//
@@ -77,6 +106,8 @@ describe("User", function() {
 			user._getData.restore();
 			console.log.restore();
 
+			// assert after console.log is restored so that assertion errors 
+			// will output correctly
 			assert(result);
 
 		});
@@ -112,13 +143,13 @@ describe("User", function() {
 			
 			assert(cb.calledOnce);
 
-			// How might we verify cb is invoked AFTER _getData?
+			// How might we verify our cb is invoked AFTER _getData?
 			//
-			// we could use spy.calledAfter()
-			// but there may be more value in testing that the callback is NOT
-			// invoked when _getData fails 
-			// instead of testing call order
-			// which is a usually tedious implementation detail
+			// we could use spy.calledAfter() (which I do here)
+			//
+			// However, it can be argured that there is more value in 
+			// testing that the callback is NOT invoked when _getData fails 
+			// instead of testing call order, which is a usually tedious implementation detail
 			assert(cb.calledAfter(user._getData));
 
 			user._getData.restore();

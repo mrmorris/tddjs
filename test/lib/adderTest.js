@@ -1,3 +1,19 @@
+/**
+ * Adder
+ *
+ * A simple function, add(), that can support the following specifications
+ * 
+ * Returns 0 for no arguments
+ * Returns the value of the argument if there is only one 
+ * Returns the sum of two arguments
+ * Returns the sum of three arguments
+ * Returns the sum of four arguments
+ * Returns the sum of ANY number of arguments
+ *
+ * Start at the top and go down, don’t jump ahead
+ * Try to take the smallest steps possible; let the test drive the implementation entirely
+ */
+
 var assert = require('chai').assert;
 
 var adder = require('../../lib/adder');

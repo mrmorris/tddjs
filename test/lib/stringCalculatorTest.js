@@ -1,3 +1,23 @@
+/**
+ * String Calculator
+ *
+ * Create a string calculator with a method “add” that accepts a single string argument. It expects 0, 1 or 2 numbers in the string, and returns the sum of the numbers.
+ * 
+ * For example: 
+ * StringCalculator.add(“”) => 0 
+ * StringCalculator.add(“1”) => 1 
+ * StringCalculator.add(“1,2”) => 3
+ *
+ * Start simple! (no argument passed)
+ *
+ * Upgrades:
+ * 1. Allow the add method to handle an unknown amount of numbers
+ * 2. Allow the add method to handle colons between numbers, “1:2,3” => 6
+ * 3. Allow the method to support a different delimiter, specified as a second argument to the method
+ * 4. Calling add with a negative number will throw an exception, “negatives not allowed”, with all negatives listed in the exception message
+ * 5. Numbers bigger than 1000 should be ignored, so “2,1001” => 2
+ *
+ */
 var assert = require('chai').assert;
 
 var stringCalc = require('../../lib/stringCalculator');
@@ -80,6 +100,4 @@ describe("String Calculator", function() {
 
 	});
 
-
 });
-
