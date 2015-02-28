@@ -1,7 +1,13 @@
-// How do I build you?
-// - Standalone function?
-// - Constructor/Object to maintain state?
-// - jQuery plugin?
+/**
+ * I decided to start with a standalone function
+ *
+ * I treated this function as a single unit
+ * As I built it out, I broke commonly used functionality into
+ * functions.
+ *
+ * There are many ways to solve this problem! This is just one.
+ *
+ */
 var listBuilder = function(selector, data, listType) {
 
 	function deleteHandler(e) {

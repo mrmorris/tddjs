@@ -1,0 +1,2 @@
+#!/bin/bash
+./node_modules/mocha-phantomjs/bin/mocha-phantomjs ./public/index.html $1

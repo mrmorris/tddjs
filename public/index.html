@@ -28,11 +28,17 @@
     </script>
 
     <!-- include lib files and matching test files -->
-    <script src="js/listBuilder.js"></script>
-    <script src="js/test/listBuilderTest.js"></script>
+    <script src="js/listBuilder-attempt1.js"></script>
+    <script src="js/test/listBuilderTest-attempt1.js"></script>
 
     <script>
-      mocha.run();
+      if (navigator.userAgent.indexOf('PhantomJS') < 0) {
+        mocha.run();
+      } else if (window.mochaPhantomJS) { 
+        mochaPhantomJS.run(); 
+      } else { 
+        // our runner may inject it
+      }
     </script>
 
   </body>

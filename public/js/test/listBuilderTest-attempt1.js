@@ -1,20 +1,5 @@
 describe("List Builder", function() {
 
-	// Where do I start? Ack...
-	//
-	// Option 1: I could start top-down
-	// Think of the product behavior (specifications/tests)
-	// And write assertions for those
-	// Then setup code
-	// And based on what I need for assertion + setup
-	// I will get a clue into what I should code at a lower level
-
-	// Option 2: Think about where this belongs
-	// How will I interact with it?
-	// How will someone "use" it? 
-	// Luckily this is relatively standalone for now
-	// "I want to call it on an element, give it some data, and have it build the list"
-
 	var sharedData = [
 		{
 			name: "Ryan",
@@ -42,10 +27,10 @@ describe("List Builder", function() {
 
 	});
 
-	// I just take a stab
+	// My first test! I just take a stab
 	it("should not add any markup when no data is given", function() {
 
-		// i start with this... basically, this should do nothing
+		// I started with this... basically, it should do nothing
 		listBuilder("#fixture");
 
 		assert.equal($fixture.html(), "");
@@ -70,13 +55,14 @@ describe("List Builder", function() {
 
 	});
 
-	// i consider this a behavior, although it may be redunant
+	// I consider this a behavior, although it may be redundant
+	// I might refactor my empty-array test above to include this specification
 	it("should use a ul by default");
 
-	// when facing this feature/upgrade
-	// i wonder, how do I ask it?
+	// when tackling this feature/upgrade I pondered:
+	// how do I ask the function to do this?
 	// I start cheap, with just an extra arg
-	it("should generate the list type when specified", function() {
+	it("should generate an ol when specified", function() {
 
 		listBuilder("#fixture", sharedData, "ol");
 
@@ -86,31 +72,25 @@ describe("List Builder", function() {
 
 	});
 
-
 	it("should load data via ajax when a url is provided instead of data array", function() {
-
-		// when data arg is a string, assume it is a url
 
 		// load data via ajax
 		sinon.stub(jQuery, "ajax");
 
 		// $.ajax returns a promise
 		// so I create a pre-resolved promise
-		// I could alternatively Fake XHR/Server
-		// Which would release me from these
-		// implementation details
+		//
+		// Alternatively, I could fake XHR/Server
+		// That may be nicer because it would free me up
+		// from testing implementation details here
 		var d = $.Deferred();
-
 		d.resolve(sharedData);
-
 		jQuery.ajax.returns(d.promise());
 
 		// execute
 		listBuilder("#fixture", "http://source");
 
-		// assert...
-		// expect $.ajax? xhr?
-		// or just verify that given an ajax return, the list is rendered
+		// expect/assert
 
 		var lis = $fixture.find("li");
 
@@ -123,6 +103,8 @@ describe("List Builder", function() {
 
 	});
 	
+	// I found it helpful to begin organizing my tests
+	// each "item" in the list had its own behavior I wanted to test for
 	describe("items", function() {
 
 		it("should include the user's name", function() {
@@ -150,18 +132,31 @@ describe("List Builder", function() {
 
 		});
 
-		it("should be removed when the [x] link is clicked", function() {
+		// The next two tests attempt to verify behavior based on events (clicks)
+		// At this point I had a decision to make, do I test the result after 
+		// an event occurs? Or do I test the wiring-up of that event handler
+		//
+		// It was a good moment to consider implementation plans
+		// In the end I didn't want to stall with the "perfect test" too much
+		// So I went with the easiest approach here: test the result given an event
+		//
+		// This is a more BDD-focused test:
+		// It reads nicely and was easy to test
+		// I am confident that my code is doing what it should be doing
+		// I am treating my listBuilder() function as a unit, ignoring implementation details of the handlers being set up
+		//
+		// For a larger module, or more complex handler functions, I may decide
+		// to expose the hanlder to test it directly 
+		//
+		// End wall of text...
 
-			// integration-ish? Yes, a little.
-			// alternatively I could plan to write a handler function separately
-			// test the handler function 
-			// then test that the handler is listening to the "click" event on the right element
+		it("should be removed when the [x] link is clicked", function() {
 
 			listBuilder("#fixture", sharedData);
 
 			var removedLi = $fixture.find("li:first");
 
-			removedLi.find("a").triggerHandler("click");
+			removedLi.find("a").trigger("click");
 
 			assert.isFalse($.contains($fixture[0], removedLi[0]));
 
@@ -175,18 +170,15 @@ describe("List Builder", function() {
 
 			var lis = $fixture.find("li");
 
-			$(lis[0]).triggerHandler("click");
-
-			$(lis[1]).triggerHandler("click");
-
-			$(lis[2]).triggerHandler("click");
+			$(lis[0]).trigger("click");
+			$(lis[1]).trigger("click");
+			$(lis[2]).trigger("click");
 
 			assert.equal(console.log.getCall(0).args[0], "blue");
 			assert.equal(console.log.getCall(1).args[0], "red");
 			assert.equal(console.log.getCall(2).args[0], "orange");
 
 		});
-
 
 	});
 

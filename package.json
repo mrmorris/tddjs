@@ -9,8 +9,10 @@
   "author": "Ryan Morris",
   "license": "ISC",
   "devDependencies": {
-    "chai": "^2.1.0",    
+    "chai": "^2.1.0",
     "mocha": "^2.1.0",
+    "mocha-phantomjs": "^3.5.3",
+    "phantomjs": "^1.9.15",
     "sinon": "^1.12.2"
   }
 }
