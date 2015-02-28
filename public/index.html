@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TDD with JavaScript - Web Test Runner</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/mocha.css" />
+  </head>
+  <body>
+    <div id="mocha"></div>
+
+    <!-- Added #fixture for shared HTML within tests-->
+    <div id="fixture"></div>
+
+    <script src="js/vendor/jquery-1.11.2.min.js"></script>
+
+    <script src="js/vendor/mocha.js"></script>
+    <!-- don't forget to include chai and sinon -->
+    <script src="js/vendor/chai.js"></script>
+    <script src="js/vendor/sinon.js"></script>
+
+    <script>
+    
+      var assert = chai.assert;
+
+      mocha.setup('bdd');
+
+    </script>
+
+    <!-- include lib files and matching test files -->
+    <script src="js/listBuilder.js"></script>
+    <script src="js/test/listBuilderTest.js"></script>
+
+    <script>
+      mocha.run();
+    </script>
+
+  </body>
+</html>

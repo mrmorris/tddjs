@@ -1,0 +1,16 @@
+{
+  "name": "tddjs",
+  "version": "1.0.0",
+  "description": "TDD with JavaScript",
+  "main": "app.js",
+  "scripts": {
+    "test": "mocha --recursive"
+  },
+  "author": "Ryan Morris",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^2.1.0",    
+    "mocha": "^2.1.0",
+    "sinon": "^1.12.2"
+  }
+}
